@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: aeafd9be4f44c7d41bb05ed8ffac60ae
+timeCreated: 1523440737
+licenseType: Store
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 16833
+  packageName: DevConsole 2
+  packageVersion: 1.0.41.180712
+  assetPath: Assets/Plugins/DevConsole/CommandSystem/link.xml
+  uploadId: 255513

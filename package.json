@@ -1,11 +1,11 @@
 {
-  "name": "com.uimgui.console",
+  "name": "com.dahs.uimguiconsole",
   "version": "0.0.1",
-  "displayName": "UIMGui Console",
-  "description": "Console UI using UIMGui with support for adding custom commands.",
+  "displayName": "Unity ImGui Console",
+  "description": "Console UI using ImGui for Unity with support for adding custom commands.",
   "unity": "2019.1",
   "keywords": [
-    "uimgui",
+    "imgui",
     "console"
   ],
   "author": {
@@ -13,5 +13,4 @@
     "email": "dahsboot@gmail.com"
   },
   "type": "library"
-  ]
 }
