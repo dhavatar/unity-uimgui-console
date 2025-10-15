@@ -1,0 +1,17 @@
+{
+  "name": "com.uimgui.console",
+  "version": "0.0.1",
+  "displayName": "UIMGui Console",
+  "description": "Console UI using UIMGui with support for adding custom commands.",
+  "unity": "2019.1",
+  "keywords": [
+    "uimgui",
+    "console"
+  ],
+  "author": {
+    "name": "David Hsu",
+    "email": "dahsboot@gmail.com"
+  },
+  "type": "library"
+  ]
+}
