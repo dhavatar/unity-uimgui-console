@@ -14,6 +14,19 @@ namespace UImGuiConsole
         private const string ErrorNoVar = "No variable provided";
         private const string ErrorSetGetNotFound = "Command doesn't exist and/or variable is not registered";
 
+        public struct CommandData
+        {
+            /// <summary>
+            /// Actual function name to use when executing.
+            /// </summary>
+            public string functionName;
+
+            /// <summary>
+            /// <see cref="Command"/> wrapper around the function to execute.
+            /// </summary>
+            public Command command;
+        }
+
         /// <summary>
         /// Autocomplete tree for commands.
         /// </summary>
@@ -35,9 +48,9 @@ namespace UImGuiConsole
         public List<ConsoleItem> Items { get; private set; }
 
         /// <summary>
-        /// Dictionary of loaded commands referenced by a string command key.
+        /// Dictionary of loaded command alias linked to functions to execute.
         /// </summary>
-        public Dictionary<string, Command> Commands { get; private set; }
+        public Dictionary<string, CommandData> Commands { get; private set; }
 
         /// <summary>
         /// Dictionary of loaded scripts referenced by a string script name key.
@@ -80,7 +93,7 @@ namespace UImGuiConsole
             VarAutocomplete = new AutoComplete();
             History = new CommandHistory();
             Items = new List<ConsoleItem>();
-            Commands = new Dictionary<string, Command>();
+            Commands = new Dictionary<string, CommandData>();
             Scripts = new Dictionary<string, Script>();
 
             _commandsManager = CreateCommandsManager();
@@ -183,7 +196,11 @@ namespace UImGuiConsole
             VarAutocomplete.Insert(command);
 
             commandsManager.Add(cmd);
-            Commands[command] = cmd;
+            Commands[command] = new CommandData
+            {
+                functionName = cmd.name,
+                command = cmd,
+            };
         }
 
         /// <summary>
@@ -225,7 +242,11 @@ namespace UImGuiConsole
             }
 
             CmdAutocomplete.Insert(command);
-            Commands[command] = null;
+            Commands[command] = new CommandData
+            {
+                functionName = command,
+                command = null,
+            };
         }
 
         /// <summary>
@@ -261,7 +282,7 @@ namespace UImGuiConsole
             {
                 CmdAutocomplete.Remove(command);
                 VarAutocomplete.Remove(command);
-                commandsManager.Remove(Commands[command]);
+                commandsManager.Remove(Commands[command].command);
                 Commands.Remove(command);
             }
         }
@@ -308,11 +329,17 @@ namespace UImGuiConsole
             // Run the command
             else
             {
+                // Get the actual function name from the alias command
+                string functionName = Commands[command_name].functionName;
+
                 // Get the arguments.
                 string arguments = string.Join(' ', lineSplit[1..]);
 
+                // Combine the function name with the arguments
+                string commandLine = $"{functionName} {arguments}";
+
                 // Execute command.
-                object result = commandsManager.Execute(line);
+                object result = commandsManager.Execute(commandLine);
 
                 // Log output.
                 ConsoleItem cmd_out = new ConsoleItem(data: $"{result}");
