@@ -354,7 +354,7 @@ namespace UImGuiConsole
         {
             // Settings
             autoScroll = true;
-            scrollToBottom = false;
+            scrollToBottom = true;
             coloredOutput = true;
             filterBar = true;
             timeStamps = true;
