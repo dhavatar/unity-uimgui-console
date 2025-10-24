@@ -12,11 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ec37f98c6b1cba4e9bc4b8df7c26008, type: 3}
   m_Name: UImGuiConsole Settings
   m_EditorClassIdentifier: UImGuiConsole::UImGuiConsole.Settings
-  selectedTab: 0
+  selectedTab: 1
   attachedLogLevel: 255
-  openKey: 0
-  autoCompleteKey: 9
-  historyKey: 0
   windowsAlpha: 0.75
   inputBufferSize: 256
   autoScroll: 1
@@ -46,7 +43,7 @@ MonoBehaviour:
     canvas: 0
     color: 0
     color32: 0
-    colorUtility: 1
+    colorUtility: 0
     crashReport: 0
     crashReportHandler: 0
     cursor: 0
