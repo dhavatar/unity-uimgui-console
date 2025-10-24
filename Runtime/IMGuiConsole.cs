@@ -50,10 +50,6 @@ namespace UImGuiConsole
 
         private void Awake()
         {
-            UImGuiUtility.Layout += OnLayout;
-            UImGuiUtility.OnInitialize += OnInitialize;
-            UImGuiUtility.OnDeinitialize += OnDeinitialize;
-
             consoleSystem = new ConsoleSystem();
             commandSuggestions = new List<string>();
             historyIndex = 0;
@@ -102,6 +98,13 @@ namespace UImGuiConsole
         private void OnDeinitialize(UImGui.UImGui obj)
         {
             // runs after UImGui.OnDisable();
+        }
+
+        private void OnEnable()
+        {
+            UImGuiUtility.Layout += OnLayout;
+            UImGuiUtility.OnInitialize += OnInitialize;
+            UImGuiUtility.OnDeinitialize += OnDeinitialize;
         }
 
         private void OnDisable()
