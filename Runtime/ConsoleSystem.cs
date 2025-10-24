@@ -57,37 +57,11 @@ namespace UImGuiConsole
         /// </summary>
         public Dictionary<string, Script> Scripts { get; private set; }
 
-        private static Settings settingsCopy;
-        private static Settings _settings;
-        public static Settings Settings
-        {
-            get
-            {
-                if (_settings == null)
-                {
-                    _settings = Resources.Load<Settings>(ConsoleSettingsReource);
-                    if (_settings != null)
-                    {
-                        // Copy the original settings and use it to reset the file when play mode ends
-                        settingsCopy = GameObject.Instantiate(_settings);
-                    }
-                }
-                return _settings;
-            }
-        }
+        public Settings Settings { get; private set; }
 
-        private CommandsManager _commandsManager;
-        public CommandsManager commandsManager
-        {
-            get
-            {
-                if (_commandsManager == null)
-                    _commandsManager = CreateCommandsManager();
-                return _commandsManager;
-            }
-        }
+        public CommandsManager CommandsManager { get; private set; }
 
-        public ConsoleSystem()
+        public ConsoleSystem(Settings settings)
         {
             CmdAutocomplete = new AutoComplete();
             VarAutocomplete = new AutoComplete();
@@ -96,10 +70,11 @@ namespace UImGuiConsole
             Commands = new Dictionary<string, CommandData>();
             Scripts = new Dictionary<string, Script>();
 
-            _commandsManager = CreateCommandsManager();
+            Settings = settings;
+            CommandsManager = CreateCommandsManager();
 
             // Register all the loaded Unity functions into the autosuggest tree
-            var commands = commandsManager.GetCommands();
+            var commands = CommandsManager.GetCommands();
             foreach (var c in commands)
             {
                 RegisterUnityCommand(c.name);
@@ -195,7 +170,7 @@ namespace UImGuiConsole
             CmdAutocomplete.Insert(command);
             VarAutocomplete.Insert(command);
 
-            commandsManager.Add(cmd);
+            CommandsManager.Add(cmd);
             Commands[command] = new CommandData
             {
                 functionName = cmd.name,
@@ -282,7 +257,7 @@ namespace UImGuiConsole
             {
                 CmdAutocomplete.Remove(command);
                 VarAutocomplete.Remove(command);
-                commandsManager.Remove(Commands[command].command);
+                CommandsManager.Remove(Commands[command].command);
                 Commands.Remove(command);
             }
         }
@@ -339,7 +314,7 @@ namespace UImGuiConsole
                 string commandLine = $"{functionName} {arguments}";
 
                 // Execute command.
-                object result = commandsManager.Execute(commandLine);
+                object result = CommandsManager.Execute(commandLine);
 
                 // Log output.
                 ConsoleItem cmd_out = new ConsoleItem(data: $"{result}");

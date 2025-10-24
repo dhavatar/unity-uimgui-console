@@ -1,5 +1,4 @@
 using ImGuiNET;
-using System;
 using System.Collections.Generic;
 using UImGui;
 using UnityEngine;
@@ -29,6 +28,7 @@ namespace UImGuiConsole
         [SerializeField] private string consoleName = "ImGui Console";
         [SerializeField] private Settings consoleSettings;
 
+        private Settings consoleSettingsCopy;
         private string inputBuffer;
         private int historyIndex;
         private bool isOpen;
@@ -51,14 +51,14 @@ namespace UImGuiConsole
 
         private void Awake()
         {
-            consoleSystem = new ConsoleSystem();
+            consoleSettingsCopy = Instantiate(consoleSettings);
+            consoleSystem = new ConsoleSystem(consoleSettings);
             commandSuggestions = new List<string>();
             historyIndex = 0;
             colorPalettes = new Vector4[6];
             textFilter = new HashSet<string>();
             inputBuffer = string.Empty;
 
-            RegisterConsoleCommands();
             DefaultSettings();
         }
 
@@ -99,6 +99,12 @@ namespace UImGuiConsole
         private void OnDeinitialize(UImGui.UImGui obj)
         {
             // runs after UImGui.OnDisable();
+        }
+
+        private void OnDestroy()
+        {
+            // Restore the settings when getting out of play
+            consoleSettings.CopyFrom(consoleSettingsCopy);
         }
 
         private void OnEnable()
@@ -510,11 +516,6 @@ namespace UImGuiConsole
             }
 
             return 0;
-        }
-
-        private void RegisterConsoleCommands()
-        {
-            // TODO: Find custom console commands in all the scripts
         }
     }
 }

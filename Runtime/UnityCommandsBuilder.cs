@@ -15,152 +15,153 @@ namespace UImGuiConsole
             this.consoleSystem = consoleSystem;
         }
 
-        public override void Build() {
+        public override void Build()
+        {
             int commandsBefore = manager.GetCommands().Length;
-            /*
-            if(ConsoleSystem.Settings.builtInCommands.analytics)
+            
+            if(consoleSystem.Settings.builtInCommands.analytics)
                 Analytics();
-            if(ConsoleSystem.Settings.builtInCommands.performanceReporting)
+            if(consoleSystem.Settings.builtInCommands.performanceReporting)
                 PerformanceReporting();
-            if(ConsoleSystem.Settings.builtInCommands.androidInput)
+            if(consoleSystem.Settings.builtInCommands.androidInput)
                 AndroidInput();
-            if(ConsoleSystem.Settings.builtInCommands.animator)
+            if(consoleSystem.Settings.builtInCommands.animator)
                 Animator();
-            if(ConsoleSystem.Settings.builtInCommands.appleReplayKit)
+            if(consoleSystem.Settings.builtInCommands.appleReplayKit)
                 AppleReplayKit();
-            if(ConsoleSystem.Settings.builtInCommands.appleTvRemote)
+            if(consoleSystem.Settings.builtInCommands.appleTvRemote)
                 AppleTvRemote();
-            if(ConsoleSystem.Settings.builtInCommands.application)
+            if(consoleSystem.Settings.builtInCommands.application)
                 Application();
-            if(ConsoleSystem.Settings.builtInCommands.audioListener)
+            if(consoleSystem.Settings.builtInCommands.audioListener)
                 AudioListener();
-            if(ConsoleSystem.Settings.builtInCommands.audioSettings)
+            if(consoleSystem.Settings.builtInCommands.audioSettings)
                 AudioSettings();
-            if(ConsoleSystem.Settings.builtInCommands.audioSource)
+            if(consoleSystem.Settings.builtInCommands.audioSource)
                 AudioSource();
-            if(ConsoleSystem.Settings.builtInCommands.caching)
+            if(consoleSystem.Settings.builtInCommands.caching)
                 Caching();
-            if(ConsoleSystem.Settings.builtInCommands.camera)
+            if(consoleSystem.Settings.builtInCommands.camera)
                 Camera();
-            if(ConsoleSystem.Settings.builtInCommands.canvas)
+            if(consoleSystem.Settings.builtInCommands.canvas)
                 Canvas();
-            if(ConsoleSystem.Settings.builtInCommands.color)
+            if(consoleSystem.Settings.builtInCommands.color)
                 Color();
-            if(ConsoleSystem.Settings.builtInCommands.color32)
+            if(consoleSystem.Settings.builtInCommands.color32)
                 Color32();
-            if(ConsoleSystem.Settings.builtInCommands.colorUtility)
+            if(consoleSystem.Settings.builtInCommands.colorUtility)
                 ColorUtility();
-            if(ConsoleSystem.Settings.builtInCommands.crashReport)
+            if(consoleSystem.Settings.builtInCommands.crashReport)
                 CrashReport();
-            if(ConsoleSystem.Settings.builtInCommands.crashReportHandler)
+            if(consoleSystem.Settings.builtInCommands.crashReportHandler)
                 CrashReportHandler();
-            if(ConsoleSystem.Settings.builtInCommands.cursor)
+            if(consoleSystem.Settings.builtInCommands.cursor)
                 Cursor();
-            if(ConsoleSystem.Settings.builtInCommands.debug)
+            if(consoleSystem.Settings.builtInCommands.debug)
                 Debug();
-            if(ConsoleSystem.Settings.builtInCommands.playerConnection)
+            if(consoleSystem.Settings.builtInCommands.playerConnection)
                 PlayerConnection();
-            if(ConsoleSystem.Settings.builtInCommands.display)
+            if(consoleSystem.Settings.builtInCommands.display)
                 Display();
-            if(ConsoleSystem.Settings.builtInCommands.dynamicGI)
+            if(consoleSystem.Settings.builtInCommands.dynamicGI)
                 DynamicGI();
-            if(ConsoleSystem.Settings.builtInCommands.font)
+            if(consoleSystem.Settings.builtInCommands.font)
                 Font();
-            if(ConsoleSystem.Settings.builtInCommands.gameObject)
+            if(consoleSystem.Settings.builtInCommands.gameObject)
                 GameObject();
-            if(ConsoleSystem.Settings.builtInCommands.hash128)
+            if(consoleSystem.Settings.builtInCommands.hash128)
                 Hash128();
-            if(ConsoleSystem.Settings.builtInCommands.handheld)
+            if(consoleSystem.Settings.builtInCommands.handheld)
                 Handheld();
-            if(ConsoleSystem.Settings.builtInCommands.humanTrait)
+            if(consoleSystem.Settings.builtInCommands.humanTrait)
                 HumanTrait();
-            if(ConsoleSystem.Settings.builtInCommands.input)
+            if(consoleSystem.Settings.builtInCommands.input)
                 Input();
-            if(ConsoleSystem.Settings.builtInCommands.compass)
+            if(consoleSystem.Settings.builtInCommands.compass)
                 Compass();
-            if(ConsoleSystem.Settings.builtInCommands.gyroscope)
+            if(consoleSystem.Settings.builtInCommands.gyroscope)
                 Gyroscope();
-            if(ConsoleSystem.Settings.builtInCommands.locationService)
+            if(consoleSystem.Settings.builtInCommands.locationService)
                 LocationService();
-            if(ConsoleSystem.Settings.builtInCommands.iOSDevice)
+            if(consoleSystem.Settings.builtInCommands.iOSDevice)
                 IOSDevice();
-            if(ConsoleSystem.Settings.builtInCommands.iOSNotificationServices)
+            if(consoleSystem.Settings.builtInCommands.iOSNotificationServices)
                 IOSNotificationServices();
-            if(ConsoleSystem.Settings.builtInCommands.iOSOnDemandResources)
+            if(consoleSystem.Settings.builtInCommands.iOSOnDemandResources)
                 IOSOnDemandResources();
-            if(ConsoleSystem.Settings.builtInCommands.layerMask)
+            if(consoleSystem.Settings.builtInCommands.layerMask)
                 LayerMask();
-            if(ConsoleSystem.Settings.builtInCommands.lightmapSettings)
+            if(consoleSystem.Settings.builtInCommands.lightmapSettings)
                 LightmapSettings();
-            if(ConsoleSystem.Settings.builtInCommands.lightProbeProxyVolume)
+            if(consoleSystem.Settings.builtInCommands.lightProbeProxyVolume)
                 LightProbeProxyVolume();
-            if(ConsoleSystem.Settings.builtInCommands.lODGroup)
+            if(consoleSystem.Settings.builtInCommands.lODGroup)
                 LODGroup();
-            if(ConsoleSystem.Settings.builtInCommands.masterServer)
+            if(consoleSystem.Settings.builtInCommands.masterServer)
                 MasterServer();
-            if(ConsoleSystem.Settings.builtInCommands.mathf)
+            if(consoleSystem.Settings.builtInCommands.mathf)
                 Mathf();
-            if(ConsoleSystem.Settings.builtInCommands.microphone)
+            if(consoleSystem.Settings.builtInCommands.microphone)
                 Microphone();
-            if(ConsoleSystem.Settings.builtInCommands.physics)
+            if(consoleSystem.Settings.builtInCommands.physics)
                 Physics();
-            if(ConsoleSystem.Settings.builtInCommands.physics2D)
+            if(consoleSystem.Settings.builtInCommands.physics2D)
                 Physics2D();
-            if(ConsoleSystem.Settings.builtInCommands.playerPrefs)
+            if(consoleSystem.Settings.builtInCommands.playerPrefs)
                 PlayerPrefs();
-            if(ConsoleSystem.Settings.builtInCommands.proceduralMaterial)
+            if(consoleSystem.Settings.builtInCommands.proceduralMaterial)
                 ProceduralMaterial();
-            if(ConsoleSystem.Settings.builtInCommands.profiler)
+            if(consoleSystem.Settings.builtInCommands.profiler)
                 Profiler();
-            if(ConsoleSystem.Settings.builtInCommands.qualitySettings)
+            if(consoleSystem.Settings.builtInCommands.qualitySettings)
                 QualitySettings();
-            if(ConsoleSystem.Settings.builtInCommands.quaternion)
+            if(consoleSystem.Settings.builtInCommands.quaternion)
                 Quaternion();
-            if(ConsoleSystem.Settings.builtInCommands.random)
+            if(consoleSystem.Settings.builtInCommands.random)
                 Random();
-            if(ConsoleSystem.Settings.builtInCommands.rect)
+            if(consoleSystem.Settings.builtInCommands.rect)
                 Rect();
-            if(ConsoleSystem.Settings.builtInCommands.reflectionProbe)
+            if(consoleSystem.Settings.builtInCommands.reflectionProbe)
                 ReflectionProbe();
-            if(ConsoleSystem.Settings.builtInCommands.remoteSettings)
+            if(consoleSystem.Settings.builtInCommands.remoteSettings)
                 RemoteSettings();
-            if(ConsoleSystem.Settings.builtInCommands.graphicsSettings)
+            if(consoleSystem.Settings.builtInCommands.graphicsSettings)
                 GraphicsSettings();
-            if(ConsoleSystem.Settings.builtInCommands.renderSettings)
+            if(consoleSystem.Settings.builtInCommands.renderSettings)
                 RenderSettings();
-            if(ConsoleSystem.Settings.builtInCommands.samsungTV)
+            if(consoleSystem.Settings.builtInCommands.samsungTV)
                 SamsungTV();
-            if(ConsoleSystem.Settings.builtInCommands.sceneManager)
+            if(consoleSystem.Settings.builtInCommands.sceneManager)
                 SceneManager();
-            if(ConsoleSystem.Settings.builtInCommands.sceneUtility)
+            if(consoleSystem.Settings.builtInCommands.sceneUtility)
                 SceneUtility();
-            if(ConsoleSystem.Settings.builtInCommands.screen)
+            if(consoleSystem.Settings.builtInCommands.screen)
                 Screen();
-            if(ConsoleSystem.Settings.builtInCommands.shader)
+            if(consoleSystem.Settings.builtInCommands.shader)
                 Shader();
-            if(ConsoleSystem.Settings.builtInCommands.sortingLayer)
+            if(consoleSystem.Settings.builtInCommands.sortingLayer)
                 SortingLayer();
-            if(ConsoleSystem.Settings.builtInCommands.systemInfo)
+            if(consoleSystem.Settings.builtInCommands.systemInfo)
                 SystemInfo();
-            if(ConsoleSystem.Settings.builtInCommands.texture)
+            if(consoleSystem.Settings.builtInCommands.texture)
                 Texture();
-            if(ConsoleSystem.Settings.builtInCommands.time)
+            if(consoleSystem.Settings.builtInCommands.time)
                 Time();
-            if(ConsoleSystem.Settings.builtInCommands.touchScreenKeyboard)
+            if(consoleSystem.Settings.builtInCommands.touchScreenKeyboard)
                 TouchScreenKeyboard();
-            if(ConsoleSystem.Settings.builtInCommands.vector2)
+            if(consoleSystem.Settings.builtInCommands.vector2)
                 Vector2();
-            if(ConsoleSystem.Settings.builtInCommands.vector3)
+            if(consoleSystem.Settings.builtInCommands.vector3)
                 Vector3();
-            if(ConsoleSystem.Settings.builtInCommands.vector4)
+            if(consoleSystem.Settings.builtInCommands.vector4)
                 Vector4();
-            if(ConsoleSystem.Settings.builtInCommands.vRInputTracking)
+            if(consoleSystem.Settings.builtInCommands.vRInputTracking)
                 VRInputTracking();
-            if(ConsoleSystem.Settings.builtInCommands.vRDevice)
+            if(consoleSystem.Settings.builtInCommands.vRDevice)
                 VRDevice();
-            if(ConsoleSystem.Settings.builtInCommands.vRSettings)
+            if(consoleSystem.Settings.builtInCommands.vRSettings)
                 VRSettings();
-            */
+            
             int commandsAfter = manager.GetCommands().Length;
             consoleSystem.Log(msg: $"Loaded {commandsAfter - commandsBefore} built-in commands");
         }

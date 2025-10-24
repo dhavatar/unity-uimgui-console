@@ -1,11 +1,14 @@
 ﻿using System;
 using UnityEngine;
 
-namespace SickDev.CommandSystem.Unity {
-    public abstract class BuiltInCommandsBuilder {
+namespace SickDev.CommandSystem.Unity
+{
+    public abstract class BuiltInCommandsBuilder
+    {
         protected CommandsManager manager { get; private set; }
 
-        public BuiltInCommandsBuilder(CommandsManager manager) {
+        public BuiltInCommandsBuilder(CommandsManager manager)
+        {
             this.manager = manager;
         }
 
