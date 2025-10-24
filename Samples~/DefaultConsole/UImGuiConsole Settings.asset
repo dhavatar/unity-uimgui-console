@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ec37f98c6b1cba4e9bc4b8df7c26008, type: 3}
+  m_Name: UImGuiConsole Settings
+  m_EditorClassIdentifier: UImGuiConsole::UImGuiConsole.Settings
+  selectedTab: 0
+  attachedLogLevel: 255
+  openKey: 0
+  autoCompleteKey: 9
+  historyKey: 0
+  windowsAlpha: 0.75
+  inputBufferSize: 256
+  autoScroll: 1
+  coloredOutput: 1
+  scrollToBottom: 1
+  showTimeStamp: 1
+  filterBar: 1
+  commandColor: {r: 1, g: 1, b: 1, a: 1}
+  logColor: {r: 1, g: 1, b: 1, a: 0.5}
+  warningColor: {r: 1, g: 0.87, b: 0.37, a: 1}
+  errorColor: {r: 1, g: 0.365, b: 0.365, a: 1}
+  infoColor: {r: 0.46, g: 0.96, b: 0.46, a: 1}
+  timestampColor: {r: 1, g: 1, b: 1, a: 0.5}
+  builtInCommands:
+    analytics: 0
+    performanceReporting: 0
+    androidInput: 0
+    animator: 0
+    appleReplayKit: 0
+    appleTvRemote: 0
+    application: 0
+    audioListener: 0
+    audioSettings: 0
+    audioSource: 0
+    caching: 0
+    camera: 0
+    canvas: 0
+    color: 0
+    color32: 0
+    colorUtility: 1
+    crashReport: 0
+    crashReportHandler: 0
+    cursor: 0
+    debug: 0
+    playerConnection: 0
+    display: 0
+    dynamicGI: 0
+    font: 0
+    gameObject: 0
+    hash128: 0
+    handheld: 0
+    humanTrait: 0
+    input: 0
+    compass: 0
+    gyroscope: 0
+    locationService: 0
+    iOSDevice: 0
+    iOSNotificationServices: 0
+    iOSOnDemandResources: 0
+    layerMask: 0
+    lightmapSettings: 0
+    lightProbeProxyVolume: 0
+    lODGroup: 0
+    masterServer: 0
+    mathf: 0
+    microphone: 0
+    physics: 0
+    physics2D: 0
+    playerPrefs: 0
+    proceduralMaterial: 0
+    profiler: 0
+    qualitySettings: 0
+    quaternion: 0
+    random: 0
+    rect: 0
+    reflectionProbe: 0
+    remoteSettings: 0
+    graphicsSettings: 0
+    renderSettings: 0
+    samsungTV: 0
+    sceneManager: 0
+    sceneUtility: 0
+    screen: 0
+    shader: 0
+    sortingLayer: 0
+    systemInfo: 0
+    texture: 0
+    time: 0
+    touchScreenKeyboard: 0
+    vector2: 0
+    vector3: 0
+    vector4: 0
+    vRInputTracking: 0
+    vRDevice: 0
+    vRSettings: 0

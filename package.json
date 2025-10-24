@@ -12,5 +12,12 @@
     "name": "David Hsu",
     "email": "dahsboot@gmail.com"
   },
-  "type": "library"
+  "type": "library",
+  "samples": [
+    {
+      "displayName": "Default UImGuiConsole",
+      "description": "Contains prefab and settings for the UImGuiConsole",
+      "path": "Samples~/DefaultConsole"
+    }
+  ]
 }

@@ -27,8 +27,7 @@ namespace UImGuiConsole
         };
 
         [SerializeField] private string consoleName = "ImGui Console";
-        [SerializeField] private int inputBufferSize = 256;
-        [SerializeField] private float windowAlpha = 0.75f;
+        [SerializeField] private Settings consoleSettings;
 
         private string inputBuffer;
         private int historyIndex;
@@ -42,6 +41,8 @@ namespace UImGuiConsole
         private Vector4[] colorPalettes;
 
         // Console settings
+        private int inputBufferSize;
+        private float windowAlpha;
         private bool autoScroll;
         private bool coloredOutput;
         private bool scrollToBottom;
@@ -355,21 +356,44 @@ namespace UImGuiConsole
 
         private void DefaultSettings()
         {
-            // Settings
-            autoScroll = true;
-            scrollToBottom = true;
-            coloredOutput = true;
-            filterBar = true;
-            timeStamps = true;
+            if (consoleSettings != null)
+            {
+                // Settings
+                inputBufferSize = consoleSettings.inputBufferSize;
+                autoScroll = consoleSettings.autoScroll;
+                scrollToBottom = consoleSettings.scrollToBottom;
+                coloredOutput = consoleSettings.coloredOutput;
+                filterBar = consoleSettings.filterBar;
+                timeStamps = consoleSettings.showTimeStamp;
 
-            // Style
-            windowAlpha = 1;
-            colorPalettes[(int)ColorPalette.COMMAND] = new Vector4(1f, 1f, 1f, 1f);
-            colorPalettes[(int)ColorPalette.LOG] = new Vector4(1f, 1f, 1f, 0.5f);
-            colorPalettes[(int)ColorPalette.WARNING] = new Vector4(1.0f, 0.87f, 0.37f, 1f);
-            colorPalettes[(int)ColorPalette.ERROR] = new Vector4(1f, 0.365f, 0.365f, 1f);
-            colorPalettes[(int)ColorPalette.INFO] = new Vector4(0.46f, 0.96f, 0.46f, 1f);
-            colorPalettes[(int)ColorPalette.TIMESTAMP] = new Vector4(1f, 1f, 1f, 0.5f);
+                // Style
+                windowAlpha = consoleSettings.windowsAlpha;
+                colorPalettes[(int)ColorPalette.COMMAND] = consoleSettings.commandColor;
+                colorPalettes[(int)ColorPalette.LOG] = consoleSettings.logColor;
+                colorPalettes[(int)ColorPalette.WARNING] = consoleSettings.warningColor;
+                colorPalettes[(int)ColorPalette.ERROR] = consoleSettings.errorColor;
+                colorPalettes[(int)ColorPalette.INFO] = consoleSettings.infoColor;
+                colorPalettes[(int)ColorPalette.TIMESTAMP] = consoleSettings.timestampColor;
+            }
+            else
+            {
+                // Settings
+                inputBufferSize = 256;
+                autoScroll = true;
+                scrollToBottom = true;
+                coloredOutput = true;
+                filterBar = true;
+                timeStamps = true;
+
+                // Style
+                windowAlpha = 0.75f;
+                colorPalettes[(int)ColorPalette.COMMAND] = new Vector4(1f, 1f, 1f, 1f);
+                colorPalettes[(int)ColorPalette.LOG] = new Vector4(1f, 1f, 1f, 0.5f);
+                colorPalettes[(int)ColorPalette.WARNING] = new Vector4(1.0f, 0.87f, 0.37f, 1f);
+                colorPalettes[(int)ColorPalette.ERROR] = new Vector4(1f, 0.365f, 0.365f, 1f);
+                colorPalettes[(int)ColorPalette.INFO] = new Vector4(0.46f, 0.96f, 0.46f, 1f);
+                colorPalettes[(int)ColorPalette.TIMESTAMP] = new Vector4(1f, 1f, 1f, 0.5f);
+            }
         }
 
         private unsafe int InputCallback(ImGuiInputTextCallbackData* data)

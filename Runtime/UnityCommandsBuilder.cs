@@ -17,7 +17,7 @@ namespace UImGuiConsole
 
         public override void Build() {
             int commandsBefore = manager.GetCommands().Length;
-
+            /*
             if(ConsoleSystem.Settings.builtInCommands.analytics)
                 Analytics();
             if(ConsoleSystem.Settings.builtInCommands.performanceReporting)
@@ -160,7 +160,7 @@ namespace UImGuiConsole
                 VRDevice();
             if(ConsoleSystem.Settings.builtInCommands.vRSettings)
                 VRSettings();
-
+            */
             int commandsAfter = manager.GetCommands().Length;
             consoleSystem.Log(msg: $"Loaded {commandsAfter - commandsBefore} built-in commands");
         }

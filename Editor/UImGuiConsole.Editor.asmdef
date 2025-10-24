@@ -1,0 +1,19 @@
+{
+    "name": "UImGuiConsole.Editor",
+    "rootNamespace": "",
+    "references": [
+        "UImGui",
+        "UImGuiConsole"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

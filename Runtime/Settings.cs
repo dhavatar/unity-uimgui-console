@@ -15,6 +15,8 @@ namespace UImGuiConsole
         public KeyCode autoCompleteKey;
         public KeyCode historyKey;
 
+        public float windowsAlpha = 0.75f;
+        public int inputBufferSize = 256;
         public bool autoScroll = true;
         public bool coloredOutput = true;
         public bool scrollToBottom = true;
