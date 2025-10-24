@@ -2,7 +2,8 @@
     "name": "UImGuiConsole",
     "rootNamespace": "",
     "references": [
-        "UImGui"
+        "UImGui",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -10,7 +11,9 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "DEVCONSOLE"
+    ],
     "versionDefines": [],
     "noEngineReferences": false
 }

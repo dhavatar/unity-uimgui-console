@@ -52,9 +52,6 @@ namespace UImGuiConsole
         void DrawBehaviorAndLook()
         {
             EditorGUILayout.PropertyField(serializedObject.FindProperty("attachedLogLevel"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("openKey"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("autoCompleteKey"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("historyKey"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("windowsAlpha"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("inputBufferSize"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("autoScroll"));

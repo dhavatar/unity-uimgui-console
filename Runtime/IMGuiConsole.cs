@@ -2,6 +2,7 @@ using ImGuiNET;
 using System.Collections.Generic;
 using UImGui;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace UImGuiConsole
 {
@@ -27,6 +28,7 @@ namespace UImGuiConsole
 
         [SerializeField] private string consoleName = "ImGui Console";
         [SerializeField] private Settings consoleSettings;
+        [SerializeField] private InputActionReference consoleKey;
 
         private Settings consoleSettingsCopy;
         private string inputBuffer;
@@ -60,6 +62,12 @@ namespace UImGuiConsole
             inputBuffer = string.Empty;
 
             DefaultSettings();
+
+            consoleKey.action.performed += OnConsoleKey;
+            consoleKey.action.Enable();
+
+            // Hide console by default
+            enabled = false;
         }
 
         private void OnLayout(UImGui.UImGui obj)
@@ -105,6 +113,8 @@ namespace UImGuiConsole
         {
             // Restore the settings when getting out of play
             consoleSettings.CopyFrom(consoleSettingsCopy);
+            consoleKey.action.performed -= OnConsoleKey;
+            consoleKey.action.Disable();
         }
 
         private void OnEnable()
@@ -119,6 +129,14 @@ namespace UImGuiConsole
             UImGuiUtility.Layout -= OnLayout;
             UImGuiUtility.OnInitialize -= OnInitialize;
             UImGuiUtility.OnDeinitialize -= OnDeinitialize;
+        }
+
+        private void OnConsoleKey(InputAction.CallbackContext obj)
+        {
+            if (obj.performed)
+            {
+                enabled = !enabled;
+            }
         }
 
         private void DrawLogWindow()

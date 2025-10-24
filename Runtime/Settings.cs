@@ -11,9 +11,6 @@ namespace UImGuiConsole
         [SerializeField] private int selectedTab;
 
         public LogLevel attachedLogLevel;
-        public KeyCode openKey;
-        public KeyCode autoCompleteKey;
-        public KeyCode historyKey;
 
         public float windowsAlpha = 0.75f;
         public int inputBufferSize = 256;
