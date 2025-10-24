@@ -133,13 +133,15 @@ namespace SickDev.CommandSystem.Unity
             builder.useClassName = true;
             manager.Add(builder.Build());
         }
-
+        
         protected void Caching() {
+#if !UNITY_WEBGL
             Type type = typeof(Caching);
             CommandsBuilder builder = new CommandsBuilder(type);
             builder.useClassName = true;
             builder.methodsSettings.AddExceptions("Authorize");
             manager.Add(builder.Build());
+#endif
         }
 
         protected void Camera() {
