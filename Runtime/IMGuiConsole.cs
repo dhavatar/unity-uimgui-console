@@ -1,4 +1,5 @@
 using ImGuiNET;
+using System;
 using System.Collections.Generic;
 using UImGui;
 using UnityEngine;
@@ -29,6 +30,8 @@ namespace UImGuiConsole
         [SerializeField] private string consoleName = "ImGui Console";
         [SerializeField] private Settings consoleSettings;
         [SerializeField] private InputActionReference consoleKey;
+
+        private static ImGuiConsole Instance { get; set; }
 
         private Settings consoleSettingsCopy;
         private string inputBuffer;
@@ -66,8 +69,59 @@ namespace UImGuiConsole
             consoleKey.action.performed += OnConsoleKey;
             consoleKey.action.Enable();
 
+            Instance = this;
+
             // Hide console by default
             enabled = false;
+        }
+
+        private void OnDestroy()
+        {
+            // Restore the settings when getting out of play
+            consoleSettings.CopyFrom(consoleSettingsCopy);
+            consoleKey.action.performed -= OnConsoleKey;
+            consoleKey.action.Disable();
+        }
+
+        private void OnEnable()
+        {
+            UImGuiUtility.Layout += OnLayout;
+            UImGuiUtility.OnInitialize += OnInitialize;
+            UImGuiUtility.OnDeinitialize += OnDeinitialize;
+        }
+
+        private void OnDisable()
+        {
+            UImGuiUtility.Layout -= OnLayout;
+            UImGuiUtility.OnInitialize -= OnInitialize;
+            UImGuiUtility.OnDeinitialize -= OnDeinitialize;
+        }
+
+        /// <summary>
+        /// Wrapper to the ConsoleSystem RegisterCommand.
+        /// </summary>
+        /// <param name="command">Non-whitespace separating name of the command. Whitespace will be dropped.</param>
+        /// <param name="function">Function to run when the command is called.</param>
+        public static void RegisterCommand(string command, Delegate function)
+        {
+            Instance.consoleSystem.RegisterCommand(command, function);
+        }
+
+        /// <summary>
+        /// Wrapper to the ConsoleSystem UnregisterCommand
+        /// </summary>
+        /// <param name="command">Command to remove.</param>
+        public static void UnregisterCommand(string command)
+        {
+            Instance.consoleSystem.UnregisterCommand(command);
+        }
+
+        private void OnConsoleKey(InputAction.CallbackContext obj)
+        {
+            if (obj.performed)
+            {
+                enabled = !enabled;
+            }
         }
 
         private void OnLayout(UImGui.UImGui obj)
@@ -107,36 +161,6 @@ namespace UImGuiConsole
         private void OnDeinitialize(UImGui.UImGui obj)
         {
             // runs after UImGui.OnDisable();
-        }
-
-        private void OnDestroy()
-        {
-            // Restore the settings when getting out of play
-            consoleSettings.CopyFrom(consoleSettingsCopy);
-            consoleKey.action.performed -= OnConsoleKey;
-            consoleKey.action.Disable();
-        }
-
-        private void OnEnable()
-        {
-            UImGuiUtility.Layout += OnLayout;
-            UImGuiUtility.OnInitialize += OnInitialize;
-            UImGuiUtility.OnDeinitialize += OnDeinitialize;
-        }
-
-        private void OnDisable()
-        {
-            UImGuiUtility.Layout -= OnLayout;
-            UImGuiUtility.OnInitialize -= OnInitialize;
-            UImGuiUtility.OnDeinitialize -= OnDeinitialize;
-        }
-
-        private void OnConsoleKey(InputAction.CallbackContext obj)
-        {
-            if (obj.performed)
-            {
-                enabled = !enabled;
-            }
         }
 
         private void DrawLogWindow()

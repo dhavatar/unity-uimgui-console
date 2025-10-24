@@ -108,7 +108,7 @@ namespace UImGuiConsole
                 return;
             }
 
-            Log(msg: line);
+            Log(ItemType.Command, line);
             ParseCommandLine(line);
         }
 
@@ -314,11 +314,23 @@ namespace UImGuiConsole
                 string commandLine = $"{functionName} {arguments}";
 
                 // Execute command.
-                object result = CommandsManager.Execute(commandLine);
-
-                // Log output.
-                ConsoleItem cmd_out = new ConsoleItem(data: $"{result}");
-                Items.Add(cmd_out);
+                CommandExecuter executer = CommandsManager.GetCommandExecuter(commandLine);
+                if (executer.canBeExecuted)
+                {
+                    object result = CommandsManager.Execute(commandLine);
+                    if (executer.hasReturnValue)
+                    {
+                        Log(msg: $"{result}");
+                    }
+                    else
+                    {
+                        Log(msg: $"Executed command {command_name}");
+                    }
+                }
+                else
+                {
+                    Log(ItemType.Error, "Invalid command parameters");
+                }
             }
         }
     }
