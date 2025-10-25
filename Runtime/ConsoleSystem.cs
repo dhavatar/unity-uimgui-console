@@ -10,7 +10,7 @@ namespace UImGuiConsole
     /// </summary>
     public class ConsoleSystem
     {
-        private const string ConsoleSettingsReource = "DevConsoleSettings";
+        private const string HelpCommand = "help";
         private const string ErrorNoVar = "No variable provided";
         private const string ErrorSetGetNotFound = "Command doesn't exist and/or variable is not registered";
 
@@ -79,6 +79,9 @@ namespace UImGuiConsole
             {
                 RegisterUnityCommand(c.name);
             }
+
+            // Add a help command to display the function parameters for commands
+            CmdAutocomplete.Insert(HelpCommand);
         }
 
         public void Log(ItemType type = ItemType.Log, string msg = "")
@@ -151,7 +154,7 @@ namespace UImGuiConsole
         /// <param name="cmd"><see cref="Command"/> to put into the map.</param>
         public void RegisterCommand(string command, Command cmd)
         {
-            if (Commands.ContainsKey(command))
+            if (Commands.ContainsKey(command) || CmdAutocomplete.Search(command))
             {
                 throw new Exception("ERROR: Command already exists");
             }
@@ -217,6 +220,8 @@ namespace UImGuiConsole
             }
 
             CmdAutocomplete.Insert(command);
+            VarAutocomplete.Insert(command);
+
             Commands[command] = new CommandData
             {
                 functionName = command,
@@ -295,6 +300,47 @@ namespace UImGuiConsole
             // Get name of command.
             string command_name = lineSplit[0];
             command_name = command_name.Trim();
+
+            // Check to see if it's one of the special commands like help or list
+            if (command_name == HelpCommand)
+            {
+                if (lineSplit.Length != 2)
+                {
+                    Log(ItemType.Warning, "Enter a command after help for more information.");
+                    return;
+                }
+
+                string helpCommand = lineSplit[1];
+                if (!Commands.ContainsKey(helpCommand))
+                {
+                    Log(ItemType.Error, "Command not found, cannot retrieve information.");
+                }
+                else
+                {
+                    var cmd = Commands[helpCommand].command;
+                    if (cmd == null)
+                    {
+                        // This is a native Unity function, so can't get this information from just the function name.
+                        // Instead, search the commands directly and find all that match.
+                        var executer = CommandsManager.GetCommandExecuter(Commands[helpCommand].functionName);
+                        var matchingCommands = executer.GetOverloads();
+                        Log(msg: $"{helpCommand} is a native Unity function, which matches the following:");
+                        foreach(var c in matchingCommands)
+                        {
+                            Log(msg: $"  {c.signature.raw}");
+                        }
+                    }
+                    else
+                    {
+                        // This is a user registered command, so the command is stored in the CommandData.
+                        // Print out the raw signature.
+                        Log(msg: $"{helpCommand} is based on the following function:");
+                        Log(msg: $"  {cmd.signature.raw}");
+                    }
+                }
+
+                return;
+            }
 
             // Get runnable command
             if (!Commands.ContainsKey(command_name))
