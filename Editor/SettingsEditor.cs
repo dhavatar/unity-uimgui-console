@@ -56,7 +56,6 @@ namespace UImGuiConsole
             EditorGUILayout.PropertyField(serializedObject.FindProperty("inputBufferSize"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("autoScroll"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("coloredOutput"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("scrollToBottom"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("showTimeStamp"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("filterBar"));
 

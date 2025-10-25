@@ -16,7 +16,6 @@ namespace UImGuiConsole
         public int inputBufferSize = 256;
         public bool autoScroll = true;
         public bool coloredOutput = true;
-        public bool scrollToBottom = true;
         public bool showTimeStamp = true;
         public bool filterBar = true;
 

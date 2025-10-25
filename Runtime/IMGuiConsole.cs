@@ -221,7 +221,7 @@ namespace UImGuiConsole
                 ImGui.PopTextWrapPos();
 
                 // Auto-scroll logs.
-                if (scrollToBottom && (ImGui.GetScrollY() >= ImGui.GetScrollMaxY() || autoScroll))
+                if (scrollToBottom && (ImGui.GetScrollY() < ImGui.GetScrollMaxY() || autoScroll))
                 {
                     ImGui.SetScrollHereY(1.0f);
                 }
@@ -409,7 +409,6 @@ namespace UImGuiConsole
                 // Settings
                 inputBufferSize = consoleSettings.inputBufferSize;
                 autoScroll = consoleSettings.autoScroll;
-                scrollToBottom = consoleSettings.scrollToBottom;
                 coloredOutput = consoleSettings.coloredOutput;
                 filterBar = consoleSettings.filterBar;
                 timeStamps = consoleSettings.showTimeStamp;
@@ -428,7 +427,6 @@ namespace UImGuiConsole
                 // Settings
                 inputBufferSize = 256;
                 autoScroll = true;
-                scrollToBottom = true;
                 coloredOutput = true;
                 filterBar = true;
                 timeStamps = true;
@@ -496,6 +494,7 @@ namespace UImGuiConsole
                                 }
 
                                 commandSuggestions.Clear();
+                                scrollToBottom = true;
                             }
 
                             // Get partial completion and suggestions.
