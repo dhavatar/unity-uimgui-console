@@ -368,10 +368,6 @@ namespace UImGuiConsole
                     {
                         Log(msg: $"{result}");
                     }
-                    else
-                    {
-                        Log(msg: $"Executed command {command_name}");
-                    }
                 }
                 else
                 {

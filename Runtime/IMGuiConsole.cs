@@ -37,11 +37,11 @@ namespace UImGuiConsole
         private string inputBuffer;
         private int historyIndex;
         private bool isOpen;
-        private HashSet<string> textFilter;
         private bool wasPrevFrameTabCompletion = false; // Flag to determine if previous input was a tab completion
         private List<string> commandSuggestions;
         private ConsoleSystem consoleSystem;
-
+        private ImGuiTextFilterPtr textFilter;
+        
         // Color palettes
         private Vector4[] colorPalettes;
 
@@ -54,15 +54,17 @@ namespace UImGuiConsole
         private bool filterBar;
         private bool timeStamps;
 
-        private void Awake()
+        private unsafe void Awake()
         {
             consoleSettingsCopy = Instantiate(consoleSettings);
             consoleSystem = new ConsoleSystem(consoleSettings);
             commandSuggestions = new List<string>();
             historyIndex = 0;
             colorPalettes = new Vector4[6];
-            textFilter = new HashSet<string>();
             inputBuffer = string.Empty;
+
+            var filterPtr = ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null);
+            textFilter = new ImGuiTextFilterPtr(filterPtr);
 
             DefaultSettings();
 
@@ -73,14 +75,18 @@ namespace UImGuiConsole
 
             // Hide console by default
             enabled = false;
+
+            RegisterConsoleCommands();
         }
 
-        private void OnDestroy()
+        private unsafe void OnDestroy()
         {
             // Restore the settings when getting out of play
             consoleSettings.CopyFrom(consoleSettingsCopy);
             consoleKey.action.performed -= OnConsoleKey;
             consoleKey.action.Disable();
+
+            ImGuiNative.ImGuiTextFilter_destroy(textFilter.NativePtr);
         }
 
         private void OnEnable()
@@ -116,6 +122,17 @@ namespace UImGuiConsole
             Instance.consoleSystem.UnregisterCommand(command);
         }
 
+        /// <summary>
+        /// Registers console specific commands.
+        /// </summary>
+        private void RegisterConsoleCommands()
+        {
+            consoleSystem.RegisterCommand("clear", new Action(() =>
+            {
+                consoleSystem.Items.Clear();
+            }));
+        }
+
         private void OnConsoleKey(InputAction.CallbackContext obj)
         {
             if (obj.performed)
@@ -139,7 +156,7 @@ namespace UImGuiConsole
 
             if (filterBar)
             {
-
+                textFilter.Draw("Filter", ImGui.GetWindowWidth() * 0.25f);
                 ImGui.Separator();
             }
 
@@ -179,7 +196,7 @@ namespace UImGuiConsole
                 foreach (var item in consoleSystem.Items)
                 {
                     // Exit if word is filtered.
-                    if (textFilter.Count > 0 && !textFilter.Contains(item.Get()))
+                    if (!textFilter.PassFilter(item.Get()))
                         continue;
 
                     // Spacing between commands.
