@@ -11,6 +11,7 @@ namespace UImGuiConsole
     public class ConsoleSystem
     {
         private const string HelpCommand = "help";
+        private const string HelpListCommand = "help-list";
         private const string ErrorNoVar = "No variable provided";
         private const string ErrorSetGetNotFound = "Command doesn't exist and/or variable is not registered";
 
@@ -82,6 +83,7 @@ namespace UImGuiConsole
 
             // Add a help command to display the function parameters for commands
             CmdAutocomplete.Insert(HelpCommand);
+            CmdAutocomplete.Insert(HelpListCommand);
         }
 
         public void Log(ItemType type = ItemType.Log, string msg = "")
@@ -301,12 +303,12 @@ namespace UImGuiConsole
             string command_name = lineSplit[0];
             command_name = command_name.Trim();
 
-            // Check to see if it's one of the special commands like help or list
+            // Check to see if it's one of the special commands like help or help-list
             if (command_name == HelpCommand)
             {
                 if (lineSplit.Length != 2)
                 {
-                    Log(ItemType.Warning, "Enter a command after help for more information.");
+                    Log(msg: "Enter a command after help for more information.");
                     return;
                 }
 
@@ -337,6 +339,16 @@ namespace UImGuiConsole
                         Log(msg: $"{helpCommand} is based on the following function:");
                         Log(msg: $"  {cmd.signature.raw}");
                     }
+                }
+
+                return;
+            }
+            else if(command_name == HelpListCommand)
+            {
+                // Outputs all the registered commands to the window
+                foreach (var c in Commands)
+                {
+                    Log(msg: $"{c.Key}");
                 }
 
                 return;

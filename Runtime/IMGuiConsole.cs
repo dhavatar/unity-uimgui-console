@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UImGui;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Vector2 = System.Numerics.Vector2;
+using Vector4 = System.Numerics.Vector4;
 
 namespace UImGuiConsole
 {
@@ -32,6 +34,7 @@ namespace UImGuiConsole
         [SerializeField] private InputActionReference consoleKey;
 
         private static ImGuiConsole Instance { get; set; }
+        private bool justOpened = false;
 
         private Settings consoleSettingsCopy;
         private string inputBuffer;
@@ -138,6 +141,7 @@ namespace UImGuiConsole
             if (obj.performed)
             {
                 enabled = !enabled;
+                justOpened = enabled;
             }
         }
 
@@ -165,7 +169,8 @@ namespace UImGuiConsole
             ImGui.Separator();
 
             // Command line
-            DrawInputBar();
+            DrawInputBar(justOpened);
+            justOpened = false;
 
             ImGui.End();
         }
@@ -182,11 +187,11 @@ namespace UImGuiConsole
 
         private void DrawLogWindow()
         {
-            float footerHeightToReserve = ImGui.GetStyle().ItemSpacing.y + ImGui.GetFrameHeightWithSpacing();
+            float footerHeightToReserve = ImGui.GetStyle().ItemSpacing.Y + ImGui.GetFrameHeightWithSpacing();
             if (ImGui.BeginChild("ScrollRegion##", new Vector2(0, -footerHeightToReserve)))
             {
                 // Display colored command output.
-                float timestamp_width = ImGui.CalcTextSize("00:00:00:0000").x;    // Timestamp.
+                float timestamp_width = ImGui.CalcTextSize("00:00:00:0000").X;    // Timestamp.
                 int count = 0;                                                    // Item count.
 
                 // Wrap items.
@@ -249,7 +254,7 @@ namespace UImGuiConsole
             }
         }
 
-        private unsafe void DrawInputBar()
+        private unsafe void DrawInputBar(bool forceFocus)
         {
             // Variables.
             ImGuiInputTextFlags inputTextFlags =
@@ -260,7 +265,7 @@ namespace UImGuiConsole
             bool reclaimFocus = false;
 
             // Input widget. (Width an always fixed width)
-            ImGui.PushItemWidth(-ImGui.GetStyle().ItemSpacing.x * 7);
+            ImGui.PushItemWidth(-ImGui.GetStyle().ItemSpacing.X * 7);
             if (ImGui.InputText("Input", ref inputBuffer, (uint)inputBufferSize, inputTextFlags, InputCallback))
             {
                 // Validate.
@@ -290,7 +295,7 @@ namespace UImGuiConsole
 
             // Auto-focus on window apparition
             ImGui.SetItemDefaultFocus();
-            if (reclaimFocus)
+            if (reclaimFocus || forceFocus)
             {
                 ImGui.SetKeyboardFocusHere(-1); // Focus on command line after clearing.
             }
@@ -355,7 +360,7 @@ namespace UImGuiConsole
                 {
                     // Logging Colors
                     ImGuiColorEditFlags flags =
-                            ImGuiColorEditFlags.Float | ImGuiColorEditFlags.AlphaPreview | ImGuiColorEditFlags.NoInputs | ImGuiColorEditFlags.AlphaBar;
+                            ImGuiColorEditFlags.Float | ImGuiColorEditFlags.AlphaPreviewHalf | ImGuiColorEditFlags.NoInputs | ImGuiColorEditFlags.AlphaBar;
 
                     ImGui.TextUnformatted("Color Palette");
                     ImGui.Indent();
@@ -432,12 +437,12 @@ namespace UImGuiConsole
 
                 // Style
                 windowAlpha = consoleSettings.windowsAlpha;
-                colorPalettes[(int)ColorPalette.COMMAND] = consoleSettings.commandColor;
-                colorPalettes[(int)ColorPalette.LOG] = consoleSettings.logColor;
-                colorPalettes[(int)ColorPalette.WARNING] = consoleSettings.warningColor;
-                colorPalettes[(int)ColorPalette.ERROR] = consoleSettings.errorColor;
-                colorPalettes[(int)ColorPalette.INFO] = consoleSettings.infoColor;
-                colorPalettes[(int)ColorPalette.TIMESTAMP] = consoleSettings.timestampColor;
+                colorPalettes[(int)ColorPalette.COMMAND] = consoleSettings.commandColor.AsNumerics();
+                colorPalettes[(int)ColorPalette.LOG] = consoleSettings.logColor.AsNumerics();
+                colorPalettes[(int)ColorPalette.WARNING] = consoleSettings.warningColor.AsNumerics();
+                colorPalettes[(int)ColorPalette.ERROR] = consoleSettings.errorColor.AsNumerics();
+                colorPalettes[(int)ColorPalette.INFO] = consoleSettings.infoColor.AsNumerics();
+                colorPalettes[(int)ColorPalette.TIMESTAMP] = consoleSettings.timestampColor.AsNumerics();
             }
             else
             {
