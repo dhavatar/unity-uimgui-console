@@ -45,4 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UImGuiConsole.Runtime::UImGuiConsole.ImGuiConsole
   consoleName: ImGui Console
-  consoleSettings: {fileID: 11400000, guid: 99bd32b8fbf998640a174b764c2ebd34, type: 2}
+  consoleSettings: {fileID: 11400000, guid: 46f698c475aec8149945fea76e69e661, type: 2}
+  consoleKey: {fileID: 0}
