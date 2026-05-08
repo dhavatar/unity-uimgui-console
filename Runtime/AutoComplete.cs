@@ -180,7 +180,7 @@ namespace UImGuiConsole
         }
 
         /// <summary>
-        /// Store suggestions that match the previx and return partially completed prefix if possible.
+        /// Store suggestions that match the prefix and return partially completed prefix if possible.
         /// </summary>
         /// <param name="prefix">Prefix string to find in the tree.</param>
         /// <param name="options">Output list of string options matching the prefix.</param>
@@ -216,16 +216,21 @@ namespace UImGuiConsole
                     // Prefix exists in tree.
                     if (index + 1 == prefix.Length)
                     {
-                        if (partialComplete)
+                        if (partialComplete && !ptr.IsWord)
                         {
                             Node pcPtr = ptr.Equal;
 
                             // Get partially completed string.
                             while (pcPtr != null)
                             {
-                                if (pcPtr.Equal != null && pcPtr.Less == null && pcPtr.Greater == null)
+                                if ((pcPtr.Equal != null && pcPtr.Less == null && pcPtr.Greater == null) ||
+                                    pcPtr.IsWord)
                                 {
                                     prefix += pcPtr.Value;
+
+                                    // If it found a word, break out of the loop early
+                                    // as this is a partial match that's also the full command.
+                                    if (pcPtr.IsWord) break;
                                 }
                                 else
                                 {
