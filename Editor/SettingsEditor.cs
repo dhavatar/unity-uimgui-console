@@ -11,6 +11,7 @@ namespace UImGuiConsole
         {
             new GUIContent("Behaviour and Look"),
             new GUIContent("Unity Commands"),
+            new GUIContent("Macro Scripts"),
         };
         SerializedProperty selectedTab;
 
@@ -38,14 +39,17 @@ namespace UImGuiConsole
         {
             selectedTab.intValue = GUILayout.Toolbar(selectedTab.intValue, tabsContents);
             switch(selectedTab.intValue) {
-            case 0:
-                DrawBehaviorAndLook();
-                break;
-            case 1:
-                GUI.enabled = !EditorApplication.isPlaying;
-                DrawBuiltInCommands();
-                GUI.enabled = true;
-                break;
+                case 0:
+                    DrawBehaviorAndLook();
+                    break;
+                case 1:
+                    GUI.enabled = !EditorApplication.isPlaying;
+                    DrawBuiltInCommands();
+                    GUI.enabled = true;
+                    break;
+                case 2:
+                    DrawMacroScripts();
+                    break;
             }
         }
 
@@ -103,6 +107,11 @@ namespace UImGuiConsole
                 EnableBuiltInCommands(commands, false);
             }
             EditorGUILayout.EndHorizontal();
+        }
+
+        void DrawMacroScripts()
+        {
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("macroScripts"));
         }
 
         private void EnableBuiltInCommands(SerializedProperty[] commands, bool enabled)

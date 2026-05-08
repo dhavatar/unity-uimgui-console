@@ -26,6 +26,7 @@ namespace UImGuiConsole
         public Color infoColor = new Vector4(0.46f, 0.96f, 0.46f, 1f);
         public Color timestampColor = new Vector4(1f, 1f, 1f, 0.5f);
 
+        public TextAsset[] macroScripts;
         public BuiltInCommandsPreferences builtInCommands = new();
 
         public void CopyFrom(Settings settings)

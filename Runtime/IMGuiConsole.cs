@@ -398,11 +398,7 @@ namespace UImGuiConsole
                     ImGui.Separator();
                     if (ImGui.Button("Reload Scripts", new Vector2(ImGui.GetColumnWidth(), 0)))
                     {
-                        foreach (var scr_pair in consoleSystem.Scripts)
-                        {
-                            // TODO: Script reloading
-                            //scr_pair.Value->Reload();
-                        }
+                        consoleSystem.ReloadScripts();
                     }
                     ImGui.EndMenu();
                 }

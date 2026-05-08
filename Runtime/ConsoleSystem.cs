@@ -1,6 +1,7 @@
 ﻿using SickDev.CommandSystem;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace UImGuiConsole
@@ -84,6 +85,9 @@ namespace UImGuiConsole
             // Add a help command to display the function parameters for commands
             CmdAutocomplete.Insert(HelpCommand);
             CmdAutocomplete.Insert(HelpListCommand);
+
+            // Register macro scripts from the settings
+            ReloadScripts();
         }
 
         public void Log(ItemType type = ItemType.Log, string msg = "")
@@ -250,6 +254,24 @@ namespace UImGuiConsole
         }
 
         /// <summary>
+        /// Registers a TextAsset script into the console system.
+        /// </summary>
+        /// <param name="name">Script name to use as the key.</param>
+        /// <param name="textAsset">Unity <see cref="TextAsset"/> containing the script.</param>
+        public void RegisterScript(string name, TextAsset textAsset)
+        {
+            if (!Scripts.ContainsKey(name))
+            {
+                Scripts[name] = new Script(textAsset);
+                VarAutocomplete.Insert(name);
+            }
+            else
+            {
+                throw new Exception($"ERROR: Script {name} already registered");
+            }
+        }
+
+        /// <summary>
         /// Removes a command from the console system.
         /// </summary>
         /// <param name="command">Command to remove.</param>
@@ -284,6 +306,40 @@ namespace UImGuiConsole
             {
                 VarAutocomplete.Remove(name);
                 Scripts.Remove(name);
+            }
+        }
+
+        /// <summary>
+        /// Reloads all scripts in the console system.
+        /// </summary>
+        public void ReloadScripts()
+        {
+            // If a script was added/removed while in play mode, the number of scripts in the settings
+            // will not match what's currently registered, so unregister all scripts and re-register all of
+            // them to reload. Otherwise, reload all the scripts in the register.
+            // TODO: Could be smarter about detecting what was removed or added, but this covers all cases,
+            // if a bit slower, but realistically, the scripts should not be that big.
+            if (Scripts.Count != Settings.macroScripts.Length)
+            {
+                var keyList = Scripts.Keys.ToList();
+                foreach (var name in keyList)
+                {
+                    UnregisterScript(name);
+                }
+
+                foreach (var textAsset in Settings.macroScripts)
+                {
+                    // Make sure there's no spaces in the script name
+                    var name = textAsset.name.Replace(' ', '_');
+                    RegisterScript(name, textAsset);
+                }
+            }
+            else
+            {
+                foreach(var value in Scripts.Values)
+                {
+                    value.Reload();
+                }
             }
         }
 
